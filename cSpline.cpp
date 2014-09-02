@@ -110,7 +110,7 @@ void cSpline::Draw(
 double cSpline::getY( double x)
 {
     int j;
-    for ( j = 0; j < mySplineSet.size(); j++ )
+    for ( j = 0; j < (int)mySplineSet.size(); j++ )
     {
         if( mySplineSet[j].x > x )
         {
