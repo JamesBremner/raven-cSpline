@@ -29,10 +29,14 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="-Dxxx_GLIBCXX_DEBUG" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="cSpline.cpp" />
+		<Unit filename="cSpline.h" />
+		<Unit filename="spline_unit_test.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
