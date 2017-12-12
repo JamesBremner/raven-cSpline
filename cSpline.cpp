@@ -149,6 +149,7 @@ bool cSpline::IsInputSane()
         if( first )
         {
             xold = x;
+            first = false;
             continue;
         }
         first = false;
