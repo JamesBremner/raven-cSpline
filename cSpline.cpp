@@ -153,7 +153,7 @@ bool cSpline::IsInputSane()
             continue;
         }
         first = false;
-        if( fabs( x - xold ) < 1 )
+        if( fabs( x - xold ) < 1e-15 )
         {
             myError = not_single_valued;
             return false;
