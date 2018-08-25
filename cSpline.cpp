@@ -24,6 +24,7 @@
 	as provided in the stackoverflow answer http://stackoverflow.com/a/19216702/16582
 	and was released under the cc-wiki licence with attirbution ( this paragraph ) required.
 */
+#include <iostream>
 #include <algorithm>
 #include <vector>
 using namespace std;
@@ -36,7 +37,8 @@ namespace raven
 
 typedef std::vector< double > vd_t;
 
-cSpline::cSpline(vd_t &x, vd_t &y)
+cSpline::cSpline(vd_t &x, vd_t &y )
+    : myMinUniqueDelta( 1 )
 {
     myX = x;
     myY = y;
@@ -55,7 +57,7 @@ cSpline::cSpline(vd_t &x, vd_t &y)
         h.push_back(x[i+1]-x[i]);
 
     vd_t alpha;
-    for(int i = 0; i < n; ++i)
+    for(int i = 1; i < n; ++i)
         alpha.push_back( 3*(a[i+1]-a[i])/h[i] - 3*(a[i]-a[i-1])/h[i-1]  );
 
     vd_t c(n+1);
@@ -96,8 +98,8 @@ cSpline::cSpline(vd_t &x, vd_t &y)
     return;
 }
 void cSpline::Draw(
-        std::function<void (double x, double y)> func,
-        int resolution )
+    std::function<void (double x, double y)> func,
+    int resolution )
 {
     double xlast = myX[myY.size()-1];
     for( int px = myX[0]; px <= xlast;
@@ -131,33 +133,32 @@ double cSpline::getY( double x)
 
 bool cSpline::IsInputSane()
 {
+    // check that there is some data
     if( ! myX.size() || ! myY.size() )
     {
         myError = no_input;
         return false;
     }
+
+    // check that x vgalues are in ascending order
     if( ! std::is_sorted( myX.begin(), myX.end() ))
     {
         myError = x_not_ascending;
         return false;
     }
 
-    bool first = true;
-    double xold;
-    for( double x : myX )
+    // check that all x values differ by at least myMinUniqueDelta
+    // myMinUniqueDelta should be 1
+    if( myX.end() != std::unique( myX.begin(), myX.end(), [ this ]( double first, double sec)
     {
-        if( first )
-        {
-            xold = x;
-            continue;
-        }
-        first = false;
-        if( fabs( x - xold ) < 1 )
-        {
-            myError = not_single_valued;
+    if ( fabs( first - sec ) < myMinUniqueDelta )
+            return true;
+        else
             return false;
-        }
-        xold = x;
+    }) )
+    {
+        myError = not_single_valued;
+        return false;
     }
 
     myError = no_error;
