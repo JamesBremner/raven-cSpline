@@ -35,6 +35,8 @@ public:
     @param[in] x  The x points
     @param[in] y  The y points
 
+    The x points must be in increasing order,
+    with a minimum delta of 1.0
     */
     cSpline(
             std::vector< double >& x,
@@ -114,6 +116,9 @@ private:
 
     /// The coefficients of the spline curves between all points
     std::vector< SplineSet > mySplineSet;
+
+    /// The minimum delta between x points, must be 1
+    double myMinUniqueDelta;
 
     bool IsInputSane();
 

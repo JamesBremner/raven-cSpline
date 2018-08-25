@@ -27,9 +27,22 @@ int main()
     {
 //        cout << spline.getY( i / 10.0 ) << ", ";
 //        cout << i / 10.0 <<" " << spline.getY( i / 10.0 ) << "\n ";
-        if ( fabs( results[ i ] - spline.getY( i / 10.0 ) ) > 1.0 )
+        if ( fabs( results[ i ] - spline.getY( i / 10.0 ) ) > 1.0 ) {
             cout << "failure " << i / 10.0 <<" " << results[i] <<" "<< spline.getY( i / 10.0 ) << endl;
+            return 1;
+        }
     }
+
+    vector< double > x2 { 0, 1, 3, 3, 4 };
+    vector< double > y2 {  100, 50, -100, 50, 200 };
+    raven::cSpline spline2( x2, y2 );
+    if( raven::cSpline::not_single_valued != spline2.IsError()  )
+    {
+        cout << "failure: single valued test\n";
+        return 2;
+    }
+
+    cout << "all unit tests passed\n";
 
     return 0;
 }
