@@ -1,0 +1,3 @@
+C:/Users/James/code/raven-cSpline/cSpline.h:67: warning: argument 'the' of command @param is not found in the argument list of raven::cSpline::Draw(std::function< void(double x, double y)> func, int resolution=100)
+C:/Users/James/code/raven-cSpline/cSpline.h:67: warning: The following parameters of raven::cSpline::Draw(std::function< void(double x, double y)> func, int resolution=100) are not documented:
+  parameter 'func'
