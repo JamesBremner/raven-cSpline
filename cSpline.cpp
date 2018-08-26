@@ -56,9 +56,9 @@ cSpline::cSpline(vd_t &x, vd_t &y )
     for(int i = 0; i < n; ++i)
         h.push_back(x[i+1]-x[i]);
 
-    vd_t alpha;
+    vd_t alpha(n);
     for(int i = 1; i < n; ++i)
-        alpha.push_back( 3*(a[i+1]-a[i])/h[i] - 3*(a[i]-a[i-1])/h[i-1]  );
+        alpha[i] = 3*(a[i+1]-a[i])/h[i] - 3*(a[i]-a[i-1])/h[i-1];
 
     vd_t c(n+1);
     vd_t l(n+1);
